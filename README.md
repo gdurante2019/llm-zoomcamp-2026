@@ -4,3 +4,5 @@ This repo contains work for DataTalksClub's 2026 LLM Zoomcamp.  This is the thir
 
 The course takes us through initial setup of Agentic RAG all the way through to an end-to-end application, including orchestration, data ingestion, evaluation, and monitoring.  Students who complete capstone projects that meet course requirements receive a certificate at the end.
 
+## First module:  Agentic RAG
+https://github.com/gdurante2019/llm-zoomcamp-2026/tree/main/01-agentic-rag
