@@ -1,4 +1,4 @@
-# Building the foundation for RAG agent 
+# Building the foundation for our RAG agent 
 
 In Module 1 of the course, we learn what LLMs are and build a simple RAG pipeline using keyword search.  Then we make it agentic, so the LLM decides when and what to search instead of running a fixed pipeline.  
 
@@ -52,7 +52,7 @@ llm("hey what's up?")
 
 
 
-    'Not much — I’m here and ready to help. What’s going on?'
+    'Hey! Not much—just here and ready to help. What’s going on?'
 
 
 
@@ -1035,3 +1035,23 @@ assistant.rag("Can I still join the course after it started?")
     'Yes, you can still join the course after it has started. You can start whenever you want.\n\nIf you want to receive a certificate, you need to finish the course with a live cohort and submit your project while submissions are still open.'
 
 
+
+## Part 2:  Persistent RAG
+
+Up until this point, we've been using ```minsearch```, which is fine if our database is relatively small because the indexing is fast.  ```minsearch``` is in-memory; it is a bunch of python libraries bound to the process in which it is running.  Once you stop the process, the data disappears.  When you re-start the process, the indexing has to happen all over again.  This breaks down as the database grows, needlessly consuming time and resources.  
+
+The solution to this is to separate the ingestion part of the process from querying.  One process writes the data to a persistent search index, while another process reads from it.  These two processes run independently, only sharing the index between them.   
+
+There are several persistent search backend for this, such as Elasticsearch, OpenSearch, Qdrant, and ```sqlitesearch```.  In this module, we use ```sqlitesearch```, a library Alexey wrote.  It is a lightweight search library and has the same API as ```minsearch```, so we can easily drop it in to our code.  It leverages SQLite, which already ships with python, and puts an easier-to-use wrapper around python's full-text search engine.  
+
+## Demonstrating Persistent RAG in Action:  Exercise
+
+Alexey instructs us to create two separate notebooks to demonstrate how the persistence process works.  One notebook ingests and indexes the document, creating an indexed database.  The other runs queries against that database.  That's how the two processes connect to each other.  
+
+### Ingestion Notebook
+
+See https://github.com/gdurante2019/llm-zoomcamp-2026/blob/main/01-agentic-rag/sqlite-ingest.ipynb for the ingestion notebook.
+
+### Query notebook
+
+See https://github.com/gdurante2019/llm-zoomcamp-2026/blob/main/01-agentic-rag/query-notebook.ipynb for the notebook executing the query.
