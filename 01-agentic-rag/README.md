@@ -1,4 +1,4 @@
-# Building the foundation for our RAG agent 
+# Part 1:  Building the foundation for our RAG agent 
 
 In Module 1 of the course, we learn what LLMs are and build a simple RAG pipeline using keyword search.  Then we make it agentic, so the LLM decides when and what to search instead of running a fixed pipeline.  
 
