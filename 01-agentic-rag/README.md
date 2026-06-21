@@ -1,4 +1,6 @@
-# Part 1:  Building the foundation for our RAG agent 
+# Module 1:  Agentic RAG 
+
+## Part 1:  Building the foundation for our RAG agent 
 
 In Module 1 of the course, we learn what LLMs are and build a simple RAG pipeline using keyword search.  Then we make it agentic, so the LLM decides when and what to search instead of running a fixed pipeline.  
 
@@ -25,9 +27,9 @@ from openai import OpenAI
 openai_client = OpenAI()
 ```
 
-## What is RAG and why do we need it?
+### What is RAG and why do we need it?
 
-### Plain LLMs lack our data
+#### Plain LLMs lack our data
 First, let's define a function to talk to the LLM:
 
 
@@ -81,7 +83,7 @@ The LLM gives a generic answer. It might say "you can usually join" or "check th
 
 This is different from a question like "how do I cook salmon?" - the LLM knows the answer because cooking salmon is common knowledge. But our courses are not in the training data.
 
-### Adding context manually
+#### Adding context manually
 
 More context can fix this. The FAQ website has questions and answers about our courses.
 
@@ -174,7 +176,7 @@ print(answer)
     Yes, you can still join. If you want to receive a certificate, make sure to submit your project while submissions are still being accepted.
 
 
-### Retrieval plus generation
+#### Retrieval plus generation
 
 RAG stands for Retrieval-Augmented Generation. Generation is the LLM producing text, and retrieval is search. We retrieve relevant documents from our knowledge base and use them to augment what the LLM generates. That search step is what gives the LLM the context it needs to answer correctly.
 
@@ -208,7 +210,7 @@ Because each piece is independent, RAG stays flexible. To use Anthropic instead 
 
 In the next section, we'll look at the dataset we'll use for our FAQ knowledge base.
 
-## The Course FAQ Dataset
+### The Course FAQ Dataset
 
 Before we build the RAG pipeline, let's get familiar with the data we'll use as our knowledge base.
 
@@ -283,7 +285,7 @@ documents[0]
 
 Each course has a slug - a short identifier used in URLs. For example, machine-learning-zoomcamp, data-engineering-zoomcamp, etc. We'll use these slugs for filtering in search.
 
-### Using this data
+#### Using this data
 
 In the RAG pipeline, this dataset is our knowledge base:
 
@@ -296,7 +298,7 @@ In the RAG pipeline, this dataset is our knowledge base:
 The question and answer fields contain the text we'll search through. The course field lets us filter by course. For example, if a student asks about the data engineering course, we skip results from the ML course. The section field helps with ranking - knowing which part of the course a question belongs to is useful context.
 
 
-### A note on data preparation
+#### A note on data preparation
 
 In our case, the data is already prepared. Alexey maintains this FAQ website and made sure the data comes back in a convenient JSON format. So we don't need to do much to get it ready. He cleaned a lot of this data with the help of an LLM (a handy use case on its own).
 
@@ -306,9 +308,9 @@ We keep the focus on the GenAI side in this course. For our projects, we should 
 
 In the next section, we'll build the search index.
 
-## Search
+### Search
 
-### Search basics
+#### Search basics
 
 At its core, every search engine does the same thing. It takes a query, scores every document for similarity, and returns the top results.
 
@@ -326,7 +328,7 @@ They mean the same thing, but share almost no keywords. "Join" is not "enroll", 
 
 We'll see how vector search solves this later. For now, let's build text search with minsearch.
 
-### Indexing with minsearch
+#### Indexing with minsearch
 
 We already have the documents list from the previous section. Now let's index it.
 
@@ -369,7 +371,7 @@ index.fit(documents)
 
 That's it; the index is built. The fit name comes from scikit-learn, where you fit a model on data. Here we fit an index on our documents.
 
-### Trying a search
+#### Trying a search
 
 Let's try a search with the question we used before:
 
@@ -445,7 +447,7 @@ We used boost_dict to give the question field more weight (2.0 instead of the de
 We used filter_dict to only return results from the LLM Zoomcamp course. Without this filter, we'd get results from all four courses.
 
 
-### Boosting fields
+#### Boosting fields
 
 Not all fields are equally important. The question field is usually more relevant than section for matching. Query words appearing in the question is a stronger signal than them appearing in the section name.
 
@@ -464,7 +466,7 @@ All fields have a default boost of 1. Giving question a boost of 2 means it coun
 
 Giving section 0.5 means it counts half as much, since a match there tells us less. This is the same boosting mechanism used by Elasticsearch and Lucene.
 
-### Filtering by course
+#### Filtering by course
 
 Sometimes you want to restrict the search to a specific course.
 
@@ -497,7 +499,7 @@ This only returns documents from the MLOps Zoomcamp. Try a few different queries
 
 
 
-### Wrapping it in a function
+#### Wrapping it in a function
 
 Let's wrap the search in a search function - the first component of our RAG pipeline:
 
@@ -560,7 +562,7 @@ search_results
 
 
 
-## Building the Prompt
+### Building the Prompt
 
 The LLM doesn't see our documents unless we pass them in. So we need to build a prompt that includes the user's question and the search results.
 
@@ -571,7 +573,7 @@ When we build AI systems, we usually split the prompt into two parts:
 
 We split them because the instructions are fixed and the user prompt is not. Keeping them apart makes the fixed part easy to reuse and the changing part easy to build fresh each time.
 
-### Instructions
+#### Instructions
 
 The instructions tell the LLM its role and how to answer:
 
@@ -589,7 +591,7 @@ respond with "I don't know."
 
 This is what grounds the answer in our data and reduces hallucinations.
 
-### The user prompt template
+#### The user prompt template
 
 The user prompt template has placeholders for the question and the context:
 
@@ -604,7 +606,7 @@ Context:
 """
 ```
 
-### Building the context
+#### Building the context
 
 The context is a formatted string with all the search results:
 
@@ -624,7 +626,7 @@ def build_context(search_results):
 
 Each document becomes a block with the section, question, and answer. This format makes it easy for the LLM to read. We turned a list of dictionaries into one string. It's a small preprocessing step before we send the data to the LLM.
 
-### Building the prompt
+#### Building the prompt
 
 Now we combine the question with the context into the user prompt:
 
@@ -692,11 +694,11 @@ The prompt is the bridge between search and the LLM. A bad prompt lets the LLM i
 
 Prompt engineering is part art, part science. Experiment, try different things, and see what works. Later in the course, we will cover evaluation metrics to you can measure how well our prompt performs instead of guessing. For now, this template is a good starting point.
 
-## The LLM
+### The LLM
 
 The last component of our RAG pipeline is the LLM. It takes the prompt we built and generates an answer.
 
-### Sending the prompt to the LLM
+#### Sending the prompt to the LLM
 
 We have the prompt from the previous section.
 
@@ -714,7 +716,7 @@ We use OpenAI's Responses API (```openai_client.responses.create```). OpenAI has
 
 There's a catch worth knowing. Many other providers like Groq and Gemini give you an OpenAI-compatible client. But they expose chat completions, not responses. So if you switch providers, you keep the OpenAI client but call ```chat.completions``` instead of ```responses```.
 
-### Exploring the response
+#### Exploring the response
 
 The response is a Pydantic object. The answer is in response.output - a list of output items.
 
@@ -778,7 +780,7 @@ response.usage
 
 
 
-### Calculating the price
+#### Calculating the price
 
 You can use different models.
 
@@ -813,7 +815,7 @@ This particular request costs a fraction of a cent. Even a full RAG query with a
 
 The usage object also reports cached input tokens. Those are billed at a lower rate when the same prompt prefix repeats.
 
-### Message history
+#### Message history
 
 Previously we sent only one string as input and got back a response. In practice, you typically send a message history - a list of messages where each message has a role.
 
@@ -843,7 +845,7 @@ This separates the fixed instructions from the user prompt, which changes every 
 
 OpenAI accepts both ```developer``` and ```system``` for the instruction role. There may be some difference between them, but in practice I don't see it change the result either way. We use ```developer``` in this course.
 
-### The LLM function
+#### The LLM function
 
 We can now put this together into an updated ```llm``` function.
 
@@ -865,7 +867,7 @@ def llm(instructions, user_prompt, model='gpt-5.4-mini'):
     return response.output_text
 ```
 
-### Full RAG
+#### Full RAG
 
 With search, the prompt, and the LLM ready, we wire them together:
 
@@ -891,7 +893,7 @@ print(answer)
 
 The answer should be based on the FAQ documents - not on the LLM's general knowledge. The LLM read the search results and generated a response grounded in our data.
 
-### Try more questions
+#### Try more questions
 
 Try a few more:
 
@@ -911,7 +913,7 @@ Notice how the answers reference specific courses and sections. The LLM reads fr
 
 This approach is modular. You can swap the search backend, the prompt template, or the LLM model. Nothing else needs to change. Later when we replace minsearch with sqlitesearch, only the ```search``` function changes.
 
-## RAG Helper
+### RAG Helper
 
 In the previous lessons, we built the RAG flow piece by piece - search, then the prompt, then the LLM call. The pipeline works, but every time we want to use it, we need to repeat the same code.
 
@@ -922,7 +924,7 @@ We'll use this code throughout the course, so let's put it into two reusable fil
 
 Then in notebooks, we just import from these files and use them.
 
-### ingest.py
+#### ingest.py
 
 This file handles data loading and index creation - everything we need before we can search.
 
@@ -962,7 +964,7 @@ def build_index(documents):
 
 We'll ```use load_faq_data()``` to fetch the documents and ```build_index()``` to create the minsearch index. Later, we'll add sqlitesearch support to this same file.
 
-### Using it in a notebook
+#### Using it in a notebook
 
 Let's try it here in the notebook.  Import from both files and put everything together:
 
@@ -1036,7 +1038,7 @@ assistant.rag("Can I still join the course after it started?")
 
 
 
-## Part 2:  Persistent RAG
+### Persistent RAG
 
 Up until this point, we've been using ```minsearch```, which is fine if our database is relatively small because the indexing is fast.  ```minsearch``` is in-memory; it is a bunch of python libraries bound to the process in which it is running.  Once you stop the process, the data disappears.  When you re-start the process, the indexing has to happen all over again.  This breaks down as the database grows, needlessly consuming time and resources.  
 
@@ -1044,14 +1046,14 @@ The solution to this is to separate the ingestion part of the process from query
 
 There are several persistent search backend for this, such as Elasticsearch, OpenSearch, Qdrant, and ```sqlitesearch```.  In this module, we use ```sqlitesearch```, a library Alexey wrote.  It is a lightweight search library and has the same API as ```minsearch```, so we can easily drop it in to our code.  It leverages SQLite, which already ships with python, and puts an easier-to-use wrapper around python's full-text search engine.  
 
-## Demonstrating Persistent RAG in Action:  Exercise
+### Demonstrating Persistent RAG in Action:  Exercise
 
 Alexey instructs us to create two separate notebooks to demonstrate how the persistence process works.  One notebook ingests and indexes the document, creating an indexed database.  The other runs queries against that database.  That's how the two processes connect to each other.  
 
-### Ingestion Notebook
+#### Ingestion Notebook
 
 See https://github.com/gdurante2019/llm-zoomcamp-2026/blob/main/01-agentic-rag/sqlite-ingest.ipynb for the ingestion notebook.
 
-### Query notebook
+#### Query notebook
 
 See https://github.com/gdurante2019/llm-zoomcamp-2026/blob/main/01-agentic-rag/query-notebook.ipynb for the notebook executing the query.
