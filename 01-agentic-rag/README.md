@@ -331,7 +331,7 @@ The question and answer fields contain the text we'll search through. The course
 
 In our case, the data is already prepared. Alexey maintains this FAQ website and made sure the data comes back in a convenient JSON format. So we don't need to do much to get it ready. He cleaned a lot of this data with the help of an LLM (a handy use case on its own).
 
-In reality, data preparation is often the most time-consuming part of building a RAG system. You may need to scrape websites, parse PDFs, and clean and chunk documents. That work isn't visible here, but he did plenty of it ahead of time.
+In reality, data preparation is often the most time-consuming part of building a RAG system. It may be necessary to scrape websites, parse PDFs, and clean and chunk documents. Even though we don't see this part of the preparation process, Alexey spent a lot of time on these activities in advance.
 
 We keep the focus on the GenAI side in this course. For our projects, we should expect to spend significant time on data preparation before we get to this point.
 
