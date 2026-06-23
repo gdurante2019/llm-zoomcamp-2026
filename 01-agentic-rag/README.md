@@ -22,6 +22,7 @@
   - [Other Frameworks](#other-frameworks)
   - [A note about avoiding agents when a simpler tool will do the job](#a-note-about-avoiding-agents-when-a-simpler-tool-will-do-the-job)
 
+Homework:  https://github.com/gdurante2019/llm-zoomcamp-2026/blob/main/01-agentic-rag/Homework_01.ipynb
 
 ## Part 1:  Building the foundation for our RAG agent 
 
