@@ -1,6 +1,16 @@
 .DS_Store
 .python-version
 
+*.db*
+
+models/
+
+*main.py
+
+.vscode/
+
+01-agentic-rag/display-image.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
