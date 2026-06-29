@@ -6,5 +6,13 @@ The course takes us through initial setup of Agentic RAG all the way through to 
 
 ## Module 1:  Agentic RAG
 
-Part 1 of this module introduces us to RAG and text search using minsearch (in-memory) and sqlitesearch (persistent RAG).  Work is in 01-agentic-rag folder of this repo:  
+Part 1 of this module introduces us to RAG and text search using minsearch (in-memory) and sqlitesearch (persistent RAG).  Part 2 of this module covers agentic RAG and agentic RAG with tool calling.  
+
+Work is in 01-agentic-rag folder of this repo:  
 https://github.com/gdurante2019/llm-zoomcamp-2026/tree/main/01-agentic-rag
+
+## Module 2:  Vector Search
+
+In this module, we advance from text search (which matches exact words in the query to the documents in the corpus) to vector search (which allows us to search by the meaning in the words, not just matching key words).  We explore a variety of libraries and approaches to vector search, including Alexey's minsearch library (which has both text search and vector search modules), sqlitesearch, pgvector, sentence-transformers, ONNX reader, and more.  
+
+Work is in 02-vector-search folder.  

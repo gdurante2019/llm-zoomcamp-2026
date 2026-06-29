@@ -9,8 +9,6 @@ models/
 
 .vscode/
 
-01-agentic-rag/display-image.ipynb
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
