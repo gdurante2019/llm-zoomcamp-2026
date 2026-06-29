@@ -1,6 +1,8 @@
-# llm-zoomcamp-2026
+# LLM Zoomcamp 2026
 
-This repo contains work for DataTalksClub's 2026 LLM Zoomcamp.  This is the third iteration of this program.  Unsurprisingly, the course has undergone substantial revisions since the first offering, but the foundational premise of building LLM apps with RAG (Retrieval Augmented Generation), agents, and vector search remains the same.
+This repo contains work for DataTalksClub's 2026 LLM Zoomcamp.  The course homepage is at https://github.com/DataTalksClub/llm-zoomcamp/tree/main.  
+
+This is the third iteration of this program.  The course has undergone revisions since the first offering, but the foundational concepts of building LLM apps with RAG (Retrieval Augmented Generation), agents, and vector search remain the same.
 
 The course takes us through initial setup of Agentic RAG all the way through to an end-to-end application, including orchestration, data ingestion, evaluation, and monitoring.  Students who complete capstone projects that meet course requirements receive a certificate at the end.
 
@@ -15,4 +17,4 @@ https://github.com/gdurante2019/llm-zoomcamp-2026/tree/main/01-agentic-rag
 
 In this module, we advance from text search (which matches exact words in the query to the documents in the corpus) to vector search (which allows us to search by the meaning in the words, not just matching key words).  We explore a variety of libraries and approaches to vector search, including Alexey's minsearch library (which has both text search and vector search modules), sqlitesearch, pgvector, sentence-transformers, ONNX reader, and more.  
 
-Work is in 02-vector-search folder.  
+Module lessons are in the 02-vector-search folder at https://github.com/gdurante2019/llm-zoomcamp-2026/tree/main/02-vector-search.  The ONNX Runtime lesson and homework file (which uses ONNX Runtime and related utilities) is located at https://github.com/gdurante2019/llm-zoomcamp-2026/tree/main/llm-zoomcamp-onnx-homework-02. 
