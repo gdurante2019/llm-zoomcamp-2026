@@ -56,6 +56,5 @@ Once the container is launched, then we can access Kestra at http://localhost:80
 
 ## Homework
 
-The homework markdown file is visible in this folder.  The output of the workflow executions I ran in Kestra is available in this folder as an Excel file. 
-
+The homework instructions are included as a markdown file in this folder.  The output of the workflow executions I ran in Kestra is available in this folder as an Excel file. 
 
