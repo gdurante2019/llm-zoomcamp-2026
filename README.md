@@ -1,6 +1,6 @@
 # LLM Zoomcamp 2026
 
-This repo contains work for DataTalksClub's 2026 LLM Zoomcamp.  The course homepage is at https://github.com/DataTalksClub/llm-zoomcamp/tree/main.  
+This repo contains my work for DataTalksClub's 2026 LLM Zoomcamp.  The course homepage is at https://github.com/DataTalksClub/llm-zoomcamp/tree/main.  
 
 This is the third iteration of this program.  The course has undergone revisions since the first offering, but the foundational concepts of building LLM apps with RAG (Retrieval Augmented Generation), agents, and vector search remain the same.
 
